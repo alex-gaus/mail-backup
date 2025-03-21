@@ -667,10 +667,9 @@ def create_folder_structure(names,basedir):
                     raise
 
 
-def main():
+def run_imapbackup(config: dict):
     """Main entry point"""
     try:
-        config = get_config()
         if config.get('folders') and config.get('exclude-folders'):
             print("ERROR: You cannot use both --folders and --exclude-folders at the same time")
             sys.exit(2)

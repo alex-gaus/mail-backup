@@ -4,6 +4,7 @@ import argparse
 from imapbackup38 import run_imapbackup
 
 def main():
+    print("### STARTING gfs_backup_logic ###")
     # Parse command-line arguments
     parser = argparse.ArgumentParser(description="IMAP Email Backup with GFS Rotation")
     parser.add_argument("-s", "--server", required=True, help="IMAP server address")
@@ -19,9 +20,9 @@ def main():
     year = today.strftime("%Y")
 
     # Define backup paths
-    DAILY_DIR = os.path.join(args.base_dir, "daily/")
-    MONTHLY_DIR = os.path.join(args.base_dir, "monthly/")
-    YEARLY_DIR = os.path.join(args.base_dir, "yearly/")
+    DAILY_DIR = os.path.join(args.base_dir, f"daily/")
+    MONTHLY_DIR = os.path.join(args.base_dir, f"monthly/{month}-{today}")
+    YEARLY_DIR = os.path.join(args.base_dir, f"yearly/{year}-{month}-{today}")
 
     # Decide which backup to run
     if today.day == 1 and today.month == 1:  # Every January 1st
@@ -53,8 +54,9 @@ def main():
     "timeout": 60             # Timeout in seconds (default: 60)
 }
 
+    print(f"Starting with agruments: user: {args.user}, server: {args.server}, path: {path}")
     # Run the backup
     run_imapbackup(config)
-
+    print("/n### SCRIPT DONE! ###")
 if __name__ == "__main__":
     main()
